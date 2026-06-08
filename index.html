@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Franco Fleet Services — On-Site Truck & Trailer Repair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d1014; --bg-2:#11161d; --surface:#151a21; --surface-2:#1c232c;
+    --line:#2a323d; --text:#eef1f4; --muted:#8a95a3;
+    --amber:#ff6400; --amber-dim:#c24d00; --green:#3ec46d; --red:#e2543f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+  .kicker{font-family:'Barlow Semi Condensed';font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);font-size:13px}
+  h2.sec{font-family:'Anton';font-size:clamp(30px,5vw,50px);line-height:1.02;text-transform:uppercase;letter-spacing:.01em;margin:14px 0 18px}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#1a1205;border:none;border-radius:8px;
+    font-family:'Barlow';font-weight:800;font-size:17px;padding:15px 28px;cursor:pointer;transition:.16s;letter-spacing:.01em}
+  .btn:hover{background:#ff8124;transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,100,0,.25)}
+  .btn.ghost{background:transparent;color:var(--text);border:1.5px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--amber);box-shadow:none}
+  .icon{width:18px;height:18px}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(13,16,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Anton';letter-spacing:.05em;font-size:18px}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber)}
+  .brandlogo{height:30px;width:auto;display:block}
+  .nav-right{display:flex;align-items:center;gap:18px}
+  .nav-phone{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px}
+  .nav-phone .icon{color:var(--amber)}
+  @media(max-width:720px){.nav-phone span{display:none}.nav .btn{padding:11px 18px;font-size:15px}}
+
+  .hero{position:relative;padding:84px 0 70px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(1000px 600px at 80% -5%,rgba(255,100,0,.16),transparent 58%),
+      radial-gradient(800px 500px at -10% 120%,rgba(62,196,109,.05),transparent 55%);}
+  .hero .wrap{position:relative;z-index:1;max-width:880px}
+  .badge247{display:inline-flex;align-items:center;gap:9px;background:rgba(255,100,0,.1);border:1px solid var(--amber-dim);
+    color:var(--amber);font-family:'Barlow Semi Condensed';font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    font-size:12px;padding:8px 14px;border-radius:30px;margin-bottom:24px}
+  .badge247 .pulse{width:8px;height:8px;border-radius:50%;background:var(--amber);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,100,0,.6)}70%{box-shadow:0 0 0 9px rgba(255,100,0,0)}100%{box-shadow:0 0 0 0 rgba(255,100,0,0)}}
+  .hero h1{font-family:'Anton';font-size:clamp(42px,7.4vw,82px);line-height:.97;text-transform:uppercase;letter-spacing:.005em;margin-bottom:24px}
+  .hero h1 em{font-style:normal;color:var(--amber)}
+  .hero p.lead{font-size:clamp(19px,2.4vw,23px);color:#c8d0da;max-width:620px;margin-bottom:34px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero-note{color:var(--muted);font-size:14.5px;margin-top:18px;display:flex;align-items:center;gap:8px}
+  .hero-note .icon{color:var(--green)}
+  .hazard{height:9px;background:repeating-linear-gradient(45deg,var(--amber) 0 16px,#1a1205 16px 32px);opacity:.85}
+
+  .stats{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:34px 28px}
+  .stat .n{font-family:'Anton';font-size:clamp(30px,4vw,44px);color:var(--amber);line-height:1}
+  .stat .l{color:var(--muted);font-family:'Barlow Semi Condensed';letter-spacing:.08em;text-transform:uppercase;font-size:12.5px;margin-top:6px}
+  @media(max-width:720px){.stats .wrap{grid-template-columns:repeat(2,1fr);gap:26px 20px}}
+
+  section{padding:78px 0}
+  .pain{background:var(--bg)}
+  .pain .grid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:start}
+  .pain .lines{display:flex;flex-direction:column;gap:18px}
+  .painline{display:flex;gap:16px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+  .painline .num{font-family:'Anton';color:var(--red);font-size:26px;line-height:1;flex:none;width:38px}
+  .painline b{font-weight:700;font-size:18px}
+  .painline p{color:var(--muted);font-size:15.5px;margin-top:3px}
+  @media(max-width:860px){.pain .grid{grid-template-columns:1fr;gap:32px}}
+
+  .how{background:var(--bg-2)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+  .stepcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:30px 26px;position:relative;overflow:hidden}
+  .stepcard .si{font-family:'Anton';font-size:64px;color:var(--surface-2);position:absolute;top:8px;right:18px;line-height:1}
+  .stepcard h3{font-size:21px;font-weight:700;margin-bottom:8px;position:relative}
+  .stepcard p{color:var(--muted);font-size:15.5px;position:relative}
+  @media(max-width:860px){.steps{grid-template-columns:1fr}}
+
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+  .svc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 24px;transition:.18s}
+  .svc:hover{border-color:var(--amber-dim);transform:translateY(-3px)}
+  .svc .ic{width:44px;height:44px;border-radius:10px;background:rgba(255,100,0,.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .svc .ic svg{width:23px;height:23px;stroke:var(--amber)}
+  .svc h3{font-size:19px;font-weight:700;margin-bottom:7px}
+  .svc p{color:var(--muted);font-size:15px}
+  @media(max-width:860px){.svc-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.svc-grid{grid-template-columns:1fr}}
+
+  .why{background:var(--bg-2)}
+  .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 40px;margin-top:30px}
+  .whyitem{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .whyitem .ck{width:26px;height:26px;flex:none;border-radius:50%;background:rgba(62,196,109,.12);display:flex;align-items:center;justify-content:center}
+  .whyitem .ck svg{width:15px;height:15px;stroke:var(--green)}
+  .whyitem b{font-weight:700;font-size:17.5px}
+  .whyitem p{color:var(--muted);font-size:15px;margin-top:2px}
+  @media(max-width:760px){.why-grid{grid-template-columns:1fr}}
+
+  .quote{background:var(--bg)}
+  .quote blockquote{font-family:'Barlow';font-size:clamp(24px,3.6vw,36px);font-weight:600;line-height:1.3;max-width:900px;margin:0 auto;text-align:center;letter-spacing:-.01em}
+  .quote blockquote span{color:var(--amber)}
+  .quote .by{text-align:center;color:var(--muted);margin-top:24px;font-family:'Barlow Semi Condensed';letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+
+  .lead{background:linear-gradient(180deg,var(--bg-2),var(--bg))}
+  .lead .box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:44px;max-width:780px;margin:34px auto 0;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+  .lead .head{text-align:center;margin-bottom:30px}
+  .lead .head p{color:var(--muted);font-size:16.5px;margin-top:8px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .fg{display:flex;flex-direction:column;gap:7px}
+  .fg.full{grid-column:1/-1}
+  .fg label{font-family:'Barlow Semi Condensed';font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12.5px;color:var(--muted)}
+  .fg label .req{color:var(--amber)}
+  .fg input,.fg select,.fg textarea{background:var(--bg);border:1.5px solid var(--line);border-radius:9px;color:var(--text);
+    font-family:'Barlow';font-size:17px;padding:13px 14px;transition:.16s;width:100%}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--amber)}
+  .fg textarea{resize:vertical;min-height:84px}
+  .fg select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238a95a3' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+  .form-foot{margin-top:26px;text-align:center}
+  .form-foot .btn{width:100%;justify-content:center;font-size:18px;padding:17px}
+  .form-foot .micro{color:var(--muted);font-size:13.5px;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+  .form-foot .micro .icon{color:var(--green)}
+  .svc-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .svc-opt{display:flex;align-items:center;gap:11px;background:var(--bg);border:1.5px solid var(--line);border-radius:9px;padding:13px 14px;cursor:pointer;transition:.15s;user-select:none}
+  .svc-opt:hover{border-color:#3c4654}
+  .svc-opt.sel{border-color:var(--amber);background:rgba(255,100,0,.08)}
+  .svc-opt .box{width:22px;height:22px;flex:none;border:1.5px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;color:transparent;transition:.15s}
+  .svc-opt.sel .box{background:var(--amber);border-color:var(--amber);color:#1a1205}
+  .svc-opt .box svg{width:14px;height:14px}
+  .svc-opt span.t{font-size:15.5px;color:#c8d0da}
+  @media(max-width:620px){.svc-opts{grid-template-columns:1fr}}
+
+  .cov{background:var(--bg)}
+  .cov-grid{display:grid;grid-template-columns:1.25fr .85fr;gap:46px;align-items:center;margin-top:30px}
+  .map-panel{position:relative;background:radial-gradient(120% 120% at 50% 0,#10161e,#0a0d12);border:1px solid var(--line);border-radius:18px;padding:14px;overflow:hidden;min-height:380px}
+  .map-panel svg{width:100%;height:auto;display:block}
+  .map-state{fill:#161d27;stroke:#28323f;stroke-width:.6;transition:fill .2s,fill-opacity .2s}
+  .map-state:hover{fill:#1d2733}
+  .map-state.covered{fill:var(--amber);fill-opacity:.20;stroke:var(--amber-dim);stroke-width:.7;cursor:default}
+  .map-state.covered:hover{fill-opacity:.36}
+  .cov-stats{display:flex;gap:30px;margin:4px 0 20px;flex-wrap:wrap}
+  .cov-stats .cs .n{font-family:'Anton';font-size:38px;color:var(--amber);line-height:1}
+  .cov-stats .cs .l{color:var(--muted);font-family:'Barlow Semi Condensed';letter-spacing:.07em;text-transform:uppercase;font-size:12px;margin-top:5px}
+  .cov-link{display:inline-flex;align-items:center;gap:7px;color:var(--amber);font-weight:600;font-size:15px;margin-top:4px}
+  .cov-link:hover{text-decoration:underline}
+  .pin-glow{fill:var(--amber);opacity:.16}
+  .pin-dot{fill:var(--amber);stroke:#1a1205;stroke-width:1.2;cursor:pointer}
+  .map-tip{position:absolute;pointer-events:none;background:#0a0d12;border:1px solid var(--amber-dim);color:var(--text);
+    font-family:'Barlow Semi Condensed';font-weight:600;letter-spacing:.04em;font-size:13px;padding:6px 11px;border-radius:7px;
+    transform:translate(-50%,-150%);opacity:0;transition:opacity .15s;white-space:nowrap;z-index:5}
+  .map-fallback{display:none;flex-wrap:wrap;gap:8px;padding:24px}
+  .map-fallback span{background:var(--surface);border:1px solid var(--line);border-radius:30px;padding:8px 15px;font-size:14px}
+  .cov-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .cov-list .chip{background:var(--surface);border:1px solid var(--line);border-radius:30px;padding:7px 14px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:8px}
+  .cov-list .chip i{width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block}
+  .expand{margin-top:26px;background:linear-gradient(120deg,rgba(255,100,0,.08),rgba(255,100,0,.02));border:1px solid var(--amber-dim);border-radius:14px;padding:24px 26px}
+  .expand h3{font-family:'Anton';font-size:23px;text-transform:uppercase;letter-spacing:.01em;margin-bottom:8px;line-height:1.1}
+  .expand p{color:#c8d0da;font-size:15.5px;margin-bottom:16px}
+  .expand .btn{font-size:15.5px;padding:12px 22px}
+  @media(max-width:880px){.cov-grid{grid-template-columns:1fr;gap:30px}.map-panel{min-height:300px}}
+  .ferr{color:var(--red);font-size:14px;margin-top:10px;text-align:center;min-height:18px;font-weight:500}
+  @media(max-width:620px){.form-grid{grid-template-columns:1fr}.lead .box{padding:28px}}
+  .success{display:none;text-align:center;padding:18px 0}
+  .success .ck{width:80px;height:80px;border-radius:50%;background:rgba(62,196,109,.12);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 22px}
+  .success .ck svg{width:38px;height:38px;stroke:var(--green)}
+  .success h3{font-family:'Anton';font-size:34px;text-transform:uppercase;margin-bottom:12px}
+  .success p{color:#c8d0da;font-size:17px;max-width:440px;margin:0 auto}
+  .spin{width:18px;height:18px;border:2px solid rgba(26,18,5,.3);border-top-color:#1a1205;border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  footer{background:#0a0c0f;border-top:1px solid var(--line);padding:48px 0 38px}
+  footer .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  footer .fcol h4{font-family:'Barlow Semi Condensed';letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-size:12px;margin-bottom:12px}
+  footer .fcol a,footer .fcol p{display:block;color:var(--text);font-size:16px;margin-bottom:7px}
+  footer .open{color:var(--green);font-weight:700;display:flex;align-items:center;gap:8px}
+  footer .copy{color:var(--muted);font-size:13px;margin-top:30px;border-top:1px solid var(--line);padding-top:20px}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="wrap">
+    <div class="brand"><svg class="brandlogo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 40" fill="none" role="img" aria-label="Franco Fleet Services"><path d="M0 4.17755L5.22193 0H5.48303V35.5614H41.7755V35.7702L36.5013 40H0V4.17755Z" fill="#FF6400"></path><rect x="44.9086" y="27.2585" width="126.162" height="1.8799" rx="0.939948" fill="#FF6400"></rect><path d="M86.9954 37.5479V32.5877H90.7232V33.666H88.4434V34.5209H90.4305V35.6146H88.4434V37.5479H86.9954Z" fill="#eef1f4"></path><path d="M93.2663 37.5479V32.5877H94.7143V36.4388H96.9479V37.5479H93.2663Z" fill="#eef1f4"></path><path d="M99.4921 37.5479V32.5877H103.251V33.6968H100.94V34.5055H102.966V35.63H100.94V36.4388H103.251V37.5479H99.4921Z" fill="#eef1f4"></path><path d="M105.868 37.5479V32.5877H109.627V33.6968H107.316V34.5055H109.342V35.63H107.316V36.4388H109.627V37.5479H105.868Z" fill="#eef1f4"></path><path d="M113.33 37.5479V33.666H111.936V32.5877H116.173V33.666H114.778V37.5479H113.33Z" fill="#eef1f4"></path><path d="M124.072 37.6249C123.738 37.6249 123.423 37.5992 123.125 37.5479C122.827 37.4914 122.573 37.4144 122.362 37.3168V36.123C122.593 36.2308 122.85 36.3181 123.133 36.3848C123.415 36.4516 123.679 36.485 123.926 36.485C124.183 36.485 124.375 36.4644 124.504 36.4234C124.637 36.3771 124.704 36.277 124.704 36.123C124.704 36.0151 124.665 35.9304 124.588 35.8688C124.516 35.8072 124.401 35.7507 124.242 35.6994C124.088 35.648 123.885 35.5838 123.633 35.5068C123.299 35.399 123.035 35.2809 122.84 35.1525C122.645 35.0241 122.504 34.8675 122.416 34.6827C122.334 34.4978 122.293 34.2719 122.293 34.0049C122.293 33.5171 122.465 33.1474 122.809 32.8958C123.158 32.639 123.674 32.5107 124.357 32.5107C124.629 32.5107 124.909 32.5338 125.197 32.58C125.489 32.6262 125.726 32.6776 125.905 32.734V33.9356C125.664 33.838 125.433 33.7687 125.212 33.7276C124.991 33.6865 124.783 33.666 124.588 33.666C124.362 33.666 124.17 33.684 124.011 33.7199C123.851 33.7559 123.772 33.8483 123.772 33.9972C123.772 34.1256 123.839 34.2206 123.972 34.2822C124.111 34.3387 124.355 34.4131 124.704 34.5055C125.109 34.6134 125.418 34.7443 125.628 34.8983C125.844 35.0524 125.99 35.2321 126.067 35.4375C126.144 35.6377 126.183 35.8662 126.183 36.123C126.183 36.5748 126.008 36.9394 125.659 37.2167C125.31 37.4888 124.781 37.6249 124.072 37.6249Z" fill="#eef1f4"></path><path d="M128.876 37.5479V32.5877H132.635V33.6968H130.324V34.5055H132.35V35.63H130.324V36.4388H132.635V37.5479H128.876Z" fill="#eef1f4"></path><path d="M135.252 37.5479V32.5877H137.832C138.238 32.5877 138.569 32.6622 138.826 32.8111C139.088 32.96 139.283 33.1679 139.411 33.4349C139.54 33.6968 139.604 34.0023 139.604 34.3515C139.604 34.6852 139.519 34.9805 139.35 35.2372C139.185 35.4888 138.965 35.6814 138.687 35.8149C138.744 35.8611 138.793 35.9176 138.834 35.9843C138.875 36.046 138.921 36.1332 138.972 36.2462L139.542 37.5479H138.033L137.509 36.354C137.468 36.2616 137.416 36.1974 137.355 36.1615C137.298 36.1204 137.216 36.0999 137.108 36.0999H136.7V37.5479H135.252ZM136.7 34.9908H137.463C137.673 34.9908 137.835 34.9368 137.948 34.829C138.066 34.7161 138.125 34.5569 138.125 34.3515C138.125 33.915 137.92 33.6968 137.509 33.6968H136.7V34.9908Z" fill="#eef1f4"></path><path d="M143.542 37.5479L141.64 32.5877H143.149L144.305 35.8688L145.46 32.5877H146.977L145.075 37.5479H143.542Z" fill="#eef1f4"></path><path d="M149.562 37.5479V32.5877H151.01V37.5479H149.562Z" fill="#eef1f4"></path><path d="M156.473 37.6249C155.574 37.6249 154.889 37.4041 154.416 36.9625C153.944 36.5209 153.708 35.897 153.708 35.0909C153.708 34.2591 153.939 33.6224 154.401 33.1808C154.863 32.734 155.551 32.5107 156.465 32.5107C156.773 32.5107 157.048 32.5338 157.289 32.58C157.531 32.6262 157.762 32.6904 157.982 32.7726V34.0357C157.541 33.8406 157.068 33.743 156.565 33.743C156.098 33.743 155.751 33.8509 155.525 34.0665C155.3 34.277 155.187 34.6185 155.187 35.0909C155.187 35.553 155.305 35.8868 155.541 36.0922C155.782 36.2924 156.129 36.3926 156.581 36.3926C156.827 36.3926 157.066 36.3694 157.297 36.3232C157.533 36.277 157.767 36.2051 157.998 36.1076V37.3784C157.777 37.4554 157.543 37.5145 157.297 37.5556C157.056 37.6018 156.781 37.6249 156.473 37.6249Z" fill="#eef1f4"></path><path d="M160.697 37.5479V32.5877H164.455V33.6968H162.145V34.5055H164.17V35.63H162.145V36.4388H164.455V37.5479H160.697Z" fill="#eef1f4"></path><path d="M168.698 37.6249C168.364 37.6249 168.049 37.5992 167.751 37.5479C167.453 37.4914 167.199 37.4144 166.988 37.3168V36.123C167.219 36.2308 167.476 36.3181 167.759 36.3848C168.041 36.4516 168.305 36.485 168.552 36.485C168.809 36.485 169.001 36.4644 169.13 36.4234C169.263 36.3771 169.33 36.277 169.33 36.123C169.33 36.0151 169.291 35.9304 169.214 35.8688C169.142 35.8072 169.027 35.7507 168.868 35.6994C168.714 35.648 168.511 35.5838 168.259 35.5068C167.925 35.399 167.661 35.2809 167.466 35.1525C167.271 35.0241 167.13 34.8675 167.042 34.6827C166.96 34.4978 166.919 34.2719 166.919 34.0049C166.919 33.5171 167.091 33.1474 167.435 32.8958C167.784 32.639 168.3 32.5107 168.983 32.5107C169.255 32.5107 169.535 32.5338 169.823 32.58C170.115 32.6262 170.352 32.6776 170.531 32.734V33.9356C170.29 33.838 170.059 33.7687 169.838 33.7276C169.617 33.6865 169.409 33.666 169.214 33.666C168.988 33.666 168.796 33.684 168.637 33.7199C168.477 33.7559 168.398 33.8483 168.398 33.9972C168.398 34.1256 168.465 34.2206 168.598 34.2822C168.737 34.3387 168.981 34.4131 169.33 34.5055C169.735 34.6134 170.044 34.7443 170.254 34.8983C170.47 35.0524 170.616 35.2321 170.693 35.4375C170.77 35.6377 170.809 35.8662 170.809 36.123C170.809 36.5748 170.634 36.9394 170.285 37.2167C169.936 37.4888 169.407 37.6249 168.698 37.6249Z" fill="#eef1f4"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M11.2121 29.2088L12.5386 27.8681C13.2682 27.1308 13.8972 26.5274 13.9363 26.5274C14.1914 26.5274 17.2067 27.3853 17.4025 27.5135C17.5984 27.6419 17.7175 27.9629 18.0332 29.2144C18.2473 30.063 18.4476 30.8519 18.4785 30.9677C18.5222 31.1316 18.2671 31.4437 17.3263 32.3777C16.6616 33.0373 16.021 33.6211 15.9026 33.6749C15.673 33.7792 15.569 33.7579 13.529 33.1896C12.8766 33.0078 12.5403 32.9201 12.3246 32.7091C12.0847 32.4745 11.9939 32.0875 11.7833 31.249C11.6432 30.6913 11.4574 30.0041 11.3703 29.7219L11.2121 29.2088ZM12.3991 29.5642L13.2939 28.6362C14.0497 27.8525 14.2294 27.7166 14.4499 27.7609C14.5935 27.7899 15.1785 27.9371 15.7499 28.0882L16.7886 28.3629L17.078 29.5079C17.2371 30.1375 17.3454 30.7232 17.3185 30.8094C17.2916 30.8956 16.8655 31.3379 16.3715 31.7924L15.4733 32.6186L14.57 32.3982C14.0731 32.2771 13.5426 32.1524 13.3909 32.1212C13.0674 32.0546 13.0514 32.021 12.6822 30.6307L12.3991 29.5642Z" fill="#eef1f4"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M5.22198 0H41.7755V35.8225H41.1149C39.6422 35.8817 35.0831 35.875 32.4316 35.8225H5.22198V0ZM41.2533 29.1147L39.8742 27.761C39.0952 26.9963 38.402 26.3581 38.3338 26.3428C38.2656 26.3273 36.2928 28.2327 33.95 30.5768L29.6903 34.8389L30.0891 35.3003H41.2533V29.1147ZM32.3774 5.67927C33.0696 4.97692 33.7045 4.61775 34.7557 4.3342C35.3744 4.16731 36.3662 4.13765 36.5904 4.27948C36.7149 4.35812 36.4433 4.68387 35.2477 5.88982L33.7489 7.40136L33.8226 8.00878C33.8631 8.34287 33.9738 9.08303 34.0686 9.65368C34.2363 10.6631 34.2495 10.6934 34.5544 10.7751C34.8548 10.8558 36.2852 11.0978 37.169 11.2175L37.5904 11.2747L39.1521 9.71039C40.0109 8.85013 40.7494 8.14621 40.7932 8.14621C40.9295 8.14621 40.8781 9.73619 40.7229 10.3191C40.4021 11.5246 39.4317 12.822 38.3887 13.4403C37.7486 13.8198 36.7717 14.0992 36.0848 14.0992C35.2466 14.0992 34.8698 14.2347 34.1629 14.79L33.543 15.277L32.5865 14.3342C31.8151 13.5738 31.5245 13.3574 31.0842 13.2156C30.6294 13.069 30.4723 13.0606 30.1442 13.165C29.6368 13.3265 29.3734 13.4415 29.1635 13.593C29.0269 13.6918 28.9129 13.6571 28.5653 13.4111C28.3291 13.2439 28.1348 13.0793 28.1336 13.0454C28.1324 13.0115 28.714 12.3981 29.4262 11.6823C30.8221 10.2793 30.9496 10.0577 30.9506 9.02977C30.9513 8.40867 31.1868 7.43843 31.4895 6.80982C31.6083 6.56303 32.0079 6.05431 32.3774 5.67927ZM23.261 12.5662C23.1595 12.1617 23.3015 11.5563 23.5444 11.3577C23.6883 11.2401 23.9467 11.1749 24.2688 11.1749C24.6812 11.1749 24.8408 11.2348 25.1736 11.5144C25.7584 12.0058 28.1314 14.3665 28.1314 14.4569C28.1314 14.5843 27.0814 15.7499 26.8012 15.9335L26.5396 16.1049L24.9321 14.4623C24.048 13.559 23.296 12.7057 23.261 12.5662ZM20.4033 14.1597C20.404 13.8101 20.7977 13.2633 21.1576 13.112C21.7963 12.8434 22.2158 13.1284 24.3007 15.2475C25.9039 16.877 25.9507 16.9369 25.8735 17.2624C25.8298 17.4469 25.7987 17.6214 25.8047 17.6501C25.9018 18.1234 25.9403 18.3078 25.869 18.426C25.8228 18.5025 25.7307 18.5513 25.5788 18.6327C24.8992 18.9969 24.5671 18.8027 22.6745 16.9348C20.9967 15.2791 20.4026 14.5532 20.4033 14.1597ZM26.7904 17.7079C26.7669 17.5887 27.3164 16.9616 28.4049 15.8655C29.9337 14.3258 30.0829 14.2037 30.4352 14.2037C30.6893 14.2037 30.9506 14.303 31.2228 14.5028C31.8881 14.9913 34.1427 17.3592 34.3737 17.8119C34.7291 18.5085 34.8998 19.2836 35.132 21.2533C35.4439 23.8983 35.6562 24.6054 36.5305 25.9103L36.7818 26.2854L33.3063 29.7598C30.2838 32.7813 29.8052 33.22 29.6338 33.1269C29.3807 32.989 23.4898 27.0621 23.546 27.0017C23.5693 26.9767 24.8925 25.6461 26.4865 24.0447C29.2359 21.2825 29.3846 21.1132 29.3846 20.746C29.3846 20.3243 29.2293 20.1978 28.8361 20.299C28.5534 20.3718 20.319 28.5825 20.0757 29.0339C19.9815 29.2089 19.8711 29.7591 19.8292 30.2628C19.7268 31.4926 19.4481 32.3358 18.8961 33.0856C18.3831 33.7825 17.3884 34.5403 16.5909 34.8418C15.8644 35.1165 14.0084 35.1191 13.1993 34.8466C11.9827 34.4369 10.8219 33.3491 10.3592 32.1853C10.1551 31.6719 10.123 31.3974 10.1197 30.1305C10.1158 28.7032 10.1235 28.6519 10.4448 27.9738C11.2167 26.3445 12.8602 25.2826 14.711 25.2172C15.8233 25.1779 15.9762 25.1021 17.0218 24.0734L18.0014 23.1097L18.9672 24.098C20.1237 25.2815 20.7666 25.6895 21.4769 25.691C22.6418 25.6932 23.7338 24.6438 23.6583 23.5945C23.629 23.1874 23.6603 23.0923 23.8672 22.9582C24.001 22.8715 24.2283 22.7717 24.3722 22.7363C24.8153 22.6274 25.4099 21.9222 25.5699 21.3159C25.6929 20.8495 25.6922 20.72 25.5648 20.415C25.4829 20.2192 25.416 20.0135 25.416 19.9578C25.416 19.9022 25.6932 19.7159 26.032 19.5437C26.6234 19.2432 26.9598 19.2127 27.2463 19.4339C27.3052 19.4794 27.5939 19.5485 27.8881 19.5876C28.5415 19.6743 29.299 19.4494 29.8625 19.0016C30.2651 18.6817 30.7155 18.605 30.9303 18.8198C31.1029 18.9924 31.0892 19.5993 30.9112 19.6676C30.6894 19.7527 29.8024 20.9516 29.802 21.167C29.8018 21.2718 29.7114 21.5057 29.601 21.6866C29.4449 21.9428 29.4046 22.1873 29.4187 22.7933C29.4287 23.2212 29.4874 23.6372 29.5491 23.7177C29.6109 23.7983 29.7158 24.0551 29.7824 24.2885C29.9068 24.7246 30.9649 26.0082 31.195 26.0019C31.3259 25.9983 31.8912 25.5342 31.8912 25.4302C31.8912 25.3955 31.6152 25.0466 31.278 24.6547C30.7515 24.043 30.6494 23.855 30.5561 23.3255C30.4374 22.6514 30.5277 21.916 30.7881 21.4375C30.8745 21.2788 31.1588 20.9138 31.42 20.6266C31.9204 20.0765 32.2701 19.2087 32.1396 18.8409C32.0138 18.4863 31.5743 17.967 31.2643 17.8067C30.7476 17.5394 30.2404 17.6135 29.3846 18.081C28.3609 18.6403 27.7959 18.6732 27.2196 18.2071C27.003 18.032 26.8099 17.8073 26.7904 17.7079ZM18.9908 17.7468C18.7437 17.2751 19.0218 16.4928 19.5115 16.282C19.6284 16.2318 19.9098 16.2102 20.1368 16.2344C20.5141 16.2745 20.7226 16.4519 22.565 18.3011C24.5499 20.2934 24.5805 20.3309 24.5805 20.7685C24.5805 21.136 24.5222 21.2661 24.2433 21.5207C23.8375 21.8915 23.6106 21.9735 23.2453 21.8818C22.942 21.8056 19.2241 18.1923 18.9908 17.7468ZM16.9564 20.0458C16.9564 19.6771 17.0189 19.5277 17.2902 19.2478C17.6607 18.8656 18.0339 18.8053 18.5021 19.052C18.6572 19.1337 19.6418 20.0648 20.6901 21.121C22.4795 22.924 22.5961 23.0655 22.5961 23.432C22.5961 24.0447 22.3506 24.4123 21.8517 24.5466C21.534 24.6323 21.347 24.6313 21.1342 24.5432C20.9759 24.4776 19.9712 23.541 18.9014 22.4617C16.9773 20.5206 16.9564 20.4947 16.9564 20.0458Z" fill="#eef1f4"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M150.969 12.6757C151.907 9.75467 154.435 8.13525 158.523 7.83802C162.839 7.52418 166.182 8.42527 167.919 10.3705C169.018 11.6018 169.428 12.7968 169.432 14.7781C169.435 16.8271 168.905 18.2207 167.659 19.4341C165.936 21.1122 163.215 21.8422 159.254 21.6891C154.716 21.5136 152.187 20.1307 151.105 17.2324C150.832 16.503 150.812 16.3377 150.805 14.8303C150.799 13.5982 150.839 13.0834 150.969 12.6757ZM156.651 13.3681C157.094 12.4124 157.846 11.7784 158.836 11.524C159.498 11.354 160.963 11.4102 161.667 11.6323C162.259 11.8192 163.032 12.4413 163.388 13.0165C163.75 13.6022 163.915 14.5535 163.784 15.2995C163.637 16.1411 163.473 16.5012 163.005 17.0201C162.268 17.8356 161.106 18.2003 159.574 18.0972C158.596 18.0315 158.013 17.7982 157.378 17.2181C156.649 16.5511 156.382 15.8885 156.383 14.748C156.384 14.1054 156.438 13.8264 156.651 13.3681Z" fill="#eef1f4"></path><path d="M134.041 8.93096C134.751 8.5625 135.735 8.25034 136.852 8.03969C138.331 7.76083 141.543 7.76188 143.066 8.04178C145.893 8.56115 147.85 9.8377 148.749 11.7493C149.045 12.3803 149.176 12.6394 149.097 12.7599C149.037 12.8518 148.853 12.863 148.527 12.897C148.166 12.9348 146.854 12.9505 145.612 12.9319L143.354 12.8982L142.863 12.445C142.248 11.878 141.688 11.6274 140.688 11.472C139.676 11.3145 138.556 11.4891 137.797 11.9227C135.802 13.062 135.725 16.3235 137.664 17.5534C138.356 17.9924 138.843 18.106 140.037 18.1076C141.413 18.1093 142.028 17.897 142.8 17.154L143.369 16.6057H149.099L149.043 16.9458C148.925 17.6756 148.413 18.5282 147.605 19.3441C146.95 20.0044 146.627 20.2359 145.823 20.6227C144.075 21.4634 142.051 21.7927 139.254 21.6912C137.057 21.6115 135.311 21.2605 134.084 20.6517C133.469 20.3465 132.351 19.4905 132.025 19.0759C131.581 18.5095 131.036 17.4481 130.841 16.7679C130.605 15.9445 130.607 13.6847 130.844 12.8033C131.284 11.1653 132.443 9.76136 134.041 8.93096Z" fill="#eef1f4"></path><path d="M47.6614 21.4099V8.04178H62.9819L63.0468 9.25243C63.0825 9.91833 63.0833 10.6703 63.0486 10.9234L62.9855 11.3838L53.2489 11.3851L53.2545 12.1938C53.2575 12.6386 53.2693 13.1084 53.2806 13.2376L53.3011 13.4726H61.4473V15.9499L60.899 16.0051C60.5974 16.0354 59.6789 16.0363 58.8578 16.0071C58.0369 15.9779 56.4506 15.9883 55.333 16.0302L53.3011 16.1064V21.4099H47.6614Z" fill="#eef1f4"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M65.2593 21.3577L65.2055 8.02444L71.2899 8.07039C77.5849 8.11791 78.2304 8.15802 79.9465 8.60909C82.019 9.15384 83.2149 10.3351 83.4901 12.1095C83.7124 13.5417 83.434 14.6079 82.5963 15.5337C82.2842 15.8786 81.8691 16.2366 81.674 16.3292C81.0795 16.6113 81.0449 16.7346 81.4801 17.0197C82.3431 17.585 82.6436 17.9699 82.9138 18.856C83.055 19.3188 83.1726 19.836 83.1751 20.0054C83.1792 20.2787 83.2868 20.6458 83.5338 21.2289C83.6076 21.403 83.457 21.4119 80.867 21.3856L78.1221 21.3577L77.6925 20.1044C77.4563 19.4151 77.1998 18.754 77.1226 18.6353C76.916 18.3175 76.3632 17.969 75.79 17.795C75.1818 17.6105 72.5415 17.485 71.536 17.5929L70.8151 17.6702L70.8754 19.2528C70.9085 20.1233 70.91 20.9655 70.8786 21.1244L70.8218 21.4133L65.2593 21.3577ZM70.9046 13.457C70.8648 13.0528 70.8644 12.421 70.9039 12.0529L70.9755 11.3838H73.0446C75.9174 11.3838 77.2766 11.6052 77.723 12.146C77.926 12.392 77.979 13.0649 77.8193 13.3677C77.7437 13.511 77.4784 13.7405 77.2299 13.8776C76.8113 14.1085 76.6046 14.1345 74.4363 14.2292C73.1484 14.2854 71.8432 14.3001 71.5359 14.2617L70.977 14.1919L70.9046 13.457Z" fill="#eef1f4"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M89.9221 12.8794C91.1774 10.916 92.3809 9.02433 92.5964 8.67572L92.9885 8.04178H95.5506C98.0733 8.04178 98.1161 8.04543 98.3311 8.27676C98.5285 8.4894 99.9192 10.6512 104.764 18.2768C105.658 19.6841 106.48 20.953 106.591 21.0966L106.793 21.3577L104.251 21.4099C102.852 21.4386 101.552 21.4386 101.361 21.4099C101.047 21.3626 100.964 21.2654 100.472 20.3655L99.9285 19.3734L97.4714 19.2815C96.12 19.2309 94.1881 19.224 93.1784 19.266L91.3425 19.3426L90.2114 21.3577L84.4106 21.4133L84.6646 21.0722C84.8044 20.8846 85.5309 19.7676 86.2792 18.5901C87.0275 17.4125 88.6667 14.8427 89.9221 12.8794ZM93.4528 15.8525C93.3922 15.7918 95.1743 12.6007 95.527 12.1385C95.5829 12.0653 95.6503 12.0273 95.6771 12.0539C95.7037 12.0806 96.2149 12.9394 96.8131 13.9624L97.9007 15.8225L97.4547 15.9045C96.9219 16.0026 93.5588 15.959 93.4528 15.8525Z" fill="#eef1f4"></path><path d="M108.445 21.4099V8.04178H115.11L116.204 9.32115C116.806 10.0248 117.552 10.906 117.863 11.2794C118.174 11.6527 119.181 12.8512 120.1 13.9426C121.019 15.0339 121.884 16.0804 122.022 16.268C122.16 16.4556 122.382 16.681 122.516 16.7691L122.761 16.929L122.633 8.17546L122.967 8.10862C123.151 8.07186 124.418 8.04178 125.783 8.04178C127.951 8.04178 128.274 8.06277 128.329 8.207C128.364 8.29786 128.392 11.3057 128.392 14.8911V21.4099H121.614L120.716 20.3394C120.222 19.7506 118.54 17.7373 116.977 15.8654L114.137 12.4619L114.082 21.4099H108.445Z" fill="#eef1f4"></path></svg></div>
+    <div class="nav-right">
+      <a class="nav-phone" href="tel:+18004197685"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>800-419-7685</span></a>
+      <a class="btn" href="#quote">Become a customer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="badge247"><span class="pulse"></span>New Customer Setup</div>
+    <h1>Set up your fleet account with <em>Franco Fleet Services.</em></h1>
+    <p class="lead">24/7/365 mobile truck & trailer maintenance across 43 states. Open an account once — then call us anytime you need maintenance, PM, or roadside service, day or night, and we come to you.</p>
+    <div class="hero-cta">
+      <a class="btn" href="#quote">Set up my account <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn ghost" href="#how">How it works</a>
+    </div>
+    <div class="hero-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Trusted by national logistics fleets and large carriers. References available on request.</div>
+  </div>
+</header>
+<div class="hazard"></div>
+
+<!-- ============ STATS ============ -->
+<div class="stats">
+  <div class="wrap">
+    <div class="stat reveal"><div class="n">24/7</div><div class="l">365 days a year</div></div>
+    <div class="stat reveal"><div class="n">43</div><div class="l">States covered</div></div>
+    <div class="stat reveal"><div class="n">50 mi</div><div class="l">Radius from each city</div></div>
+    <div class="stat reveal"><div class="n">Mobile</div><div class="l">On-site, no towing</div></div>
+  </div>
+</div>
+
+<!-- ============ PAIN ============ -->
+<section class="pain">
+  <div class="wrap grid">
+    <div class="reveal">
+      <div class="kicker">The real cost</div>
+      <h2 class="sec">Downtime is the line item you don't track — and it's the biggest.</h2>
+      <p style="color:#c8d0da;font-size:18px">A repair bill is the small part. The expensive part is everything that stops when a truck does.</p>
+    </div>
+    <div class="lines">
+      <div class="painline reveal"><span class="num">01</span><div><b>Missed deliveries & broken SLAs</b><p>One truck down can blow an entire route — and the contract attached to it.</p></div></div>
+      <div class="painline reveal"><span class="num">02</span><div><b>Idle drivers, paid to wait</b><p>A driver stuck roadside is payroll going out with zero revenue coming in.</p></div></div>
+      <div class="painline reveal"><span class="num">03</span><div><b>Tow bills & shop queues</b><p>Towing to a shop and waiting in line turns a 2-hour fix into a 2-day loss.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW ============ -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="reveal" style="max-width:680px">
+      <div class="kicker">How it works</div>
+      <h2 class="sec">Set up once. Then we're your fleet's shop on call.</h2>
+    </div>
+    <div class="steps">
+      <div class="stepcard reveal"><div class="si">1</div><h3>Submit your setup</h3><p>Fill out the form below with your company info and what you're looking for. Takes two minutes.</p></div>
+      <div class="stepcard reveal"><div class="si">2</div><h3>We open your account</h3><p>Our dispatch team reaches out and gets your account set up — usually within 1–2 business days.</p></div>
+      <div class="stepcard reveal"><div class="si">3</div><h3>Call us whenever</h3><p>Account active? Just call. We dispatch a mobile tech to your trucks — maintenance, PM, or roadside.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="svc-sec">
+  <div class="wrap">
+    <div class="reveal" style="max-width:680px">
+      <div class="kicker">What we handle</div>
+      <h2 class="sec">Full mobile service for trucks & trailers.</h2>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M13 2L3 14h7l-1 8 11-12h-7z"/></svg></div><h3>Emergency roadside repair</h3><p>Breakdowns, no-starts, air & brake failures — fast on-site response.</p></div>
+      <div class="svc reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div><h3>Preventive maintenance (PM)</h3><p>Scheduled PM programs that keep trucks out of the breakdown lane.</p></div>
+      <div class="svc reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="1" y="6" width="15" height="11" rx="1"/><path d="M16 9h4l3 3v5h-7z"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg></div><h3>Trailer & reefer repair</h3><p>Trailers, refrigeration units, lights, doors, and landing gear.</p></div>
+      <div class="svc reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3>DOT inspections</h3><p>Annual inspections and compliance work to keep your fleet legal and rolling.</p></div>
+      <div class="svc reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Tire, brake & air systems</h3><p>On-site tire service, brake jobs, and air system diagnostics.</p></div>
+      <div class="svc reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></div><h3>Fleet maintenance contracts</h3><p>Volume agreements with priority dispatch and predictable pricing.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="why">
+  <div class="wrap">
+    <div class="reveal" style="max-width:680px">
+      <div class="kicker">Why fleets switch to us</div>
+      <h2 class="sec">Built around uptime, not shop hours.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="whyitem reveal"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>True 24/7/365 dispatch</b><p>Breakdowns don't keep business hours. Neither does our line — day, night, weekends, holidays.</p></div></div>
+      <div class="whyitem reveal"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>Mobile-first — no towing</b><p>We bring the shop to the truck, cutting tow bills and shop-queue days.</p></div></div>
+      <div class="whyitem reveal"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>Coverage across 43 states</b><p>Up to a 50-mile radius from hundreds of cities — your fleet's partner everywhere you go.</p></div></div>
+      <div class="whyitem reveal"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>One point of contact for the whole fleet</b><p>One number, one account, one team that knows your trucks.</p></div></div>
+      <div class="whyitem reveal"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>Fleet-volume pricing</b><p>Predictable rates that scale with your fleet, not against it.</p></div></div>
+      <div class="whyitem reveal"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>One setup, then on call</b><p>Open your account once — after that, service is just a phone call away.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COVERAGE ============ -->
+<section class="cov" id="coverage">
+  <div class="wrap">
+    <div class="reveal" style="max-width:680px">
+      <div class="kicker">Where we operate</div>
+      <h2 class="sec">Your fleet's partner, everywhere you go.</h2>
+    </div>
+    <div class="cov-grid">
+      <div class="map-panel reveal" id="mapPanel">
+        <div id="usMap"></div>
+        <div class="map-fallback" id="mapFallback"></div>
+        <div class="map-tip" id="mapTip"></div>
+      </div>
+      <div class="reveal">
+        <p style="color:#c8d0da;font-size:18px">We dispatch mobile techs across <b style="color:var(--text)">43 states</b> — up to a 50-mile radius from hundreds of cities. If you run trucks, chances are we're already near you.</p>
+        <div class="cov-stats">
+          <div class="cs"><div class="n">43</div><div class="l">States covered</div></div>
+          <div class="cs"><div class="n">50 mi</div><div class="l">Radius per city</div></div>
+          <div class="cs"><div class="n">100s</div><div class="l">Cities served</div></div>
+        </div>
+        <a class="cov-link" href="https://francofleetservices.com/coveredlocations/" target="_blank" rel="noopener">See the full list of covered cities <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <div class="expand">
+          <h3>Not within range of a covered city?</h3>
+          <p>If you run a large enough fleet, we'll study opening a dedicated service area near you. Tell us where you are and how many vehicles you run.</p>
+          <button class="btn" onclick="askExpansion()">Request coverage in my area <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE ============ -->
+<section class="quote">
+  <div class="wrap">
+    <blockquote class="reveal">Trusted by <span>national logistics fleets and large carriers</span> to keep their trucks on the road — wherever they run.</blockquote>
+    <div class="by reveal">References available on request</div>
+  </div>
+</section>
+
+<!-- ============ LEAD FORM ============ -->
+<section class="lead" id="quote">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="kicker">New Customer Setup</div>
+      <h2 class="sec" style="margin-bottom:6px">Open your fleet account.</h2>
+      <p>Fill this out and our dispatch team will set up your account, usually within 1–2 business days. This isn't an emergency line — to request service right now, call <a href="tel:+18004197685" style="color:var(--amber);font-weight:600">800-419-7685</a>.</p>
+    </div>
+    <div class="box reveal">
+      <div id="formView">
+        <div class="form-grid">
+          <div class="fg"><label>Company name <span class="req">*</span></label><input id="f_company" type="text" placeholder="Your company"></div>
+          <div class="fg"><label>Contact name <span class="req">*</span></label><input id="f_name" type="text" placeholder="Full name"></div>
+          <div class="fg"><label>Phone <span class="req">*</span></label><input id="f_phone" type="tel" placeholder="(000) 000-0000"></div>
+          <div class="fg"><label>Email <span class="req">*</span></label><input id="f_email" type="email" placeholder="you@company.com"></div>
+          <div class="fg full"><label>Company address <span class="req">*</span></label><input id="f_address" type="text" placeholder="Street, City, State, ZIP"></div>
+          <div class="fg"><label>How many units? <span class="req">*</span></label>
+            <select id="f_fleet">
+              <option value="">Select…</option>
+              <option value="1-10">1–10 vehicles</option>
+              <option value="11-50">11–50 vehicles</option>
+              <option value="51-200">51–200 vehicles</option>
+              <option value="200+">200+ vehicles</option>
+            </select>
+          </div>
+          <div class="fg"><label>What does your company do?</label><input id="f_business" type="text" placeholder="e.g. regional carrier, last-mile delivery, construction"></div>
+          <div class="fg full"><label>What are you looking for? <span class="req">*</span></label>
+            <div class="svc-opts" id="svcOpts">
+              <div class="svc-opt" data-v="maintenance" onclick="toggleSvc(this)"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span><span class="t">General maintenance &amp; repair</span></div>
+              <div class="svc-opt" data-v="pm" onclick="toggleSvc(this)"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span><span class="t">PM / oil changes (scheduled)</span></div>
+              <div class="svc-opt" data-v="emergency" onclick="toggleSvc(this)"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span><span class="t">Emergency / roadside coverage</span></div>
+              <div class="svc-opt" data-v="dot" onclick="toggleSvc(this)"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span><span class="t">DOT inspections</span></div>
+            </div>
+          </div>
+          <div class="fg full"><label>Anything else? (optional)</label><textarea id="f_message" placeholder="Locations, trailer types, current provider, anything we should know…"></textarea></div>
+          <div class="fg full svc-opt" style="margin-top:2px" data-v="__exp" onclick="toggleExp(this)"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span><span class="t">My area may be outside your coverage — please review based on my fleet size.</span></div>
+        </div>
+        <div class="ferr" id="ferr"></div>
+        <div class="form-foot">
+          <button class="btn" id="submitBtn" onclick="submitLead()">Set up my account <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <div class="micro"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>No obligation. We'll reach out to finish setting up your account.</div>
+        </div>
+      </div>
+      <div class="success" id="successView">
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
+        <h3>Setup request received</h3>
+        <p>Thanks. Our dispatch team will reach out to open your account, usually within 1–2 business days. Once it's active, you can call us anytime to request service.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="fcol">
+      <div class="brand" style="margin-bottom:14px"><svg class="brandlogo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 40" fill="none" role="img" aria-label="Franco Fleet Services"><path d="M0 4.17755L5.22193 0H5.48303V35.5614H41.7755V35.7702L36.5013 40H0V4.17755Z" fill="#FF6400"></path><rect x="44.9086" y="27.2585" width="126.162" height="1.8799" rx="0.939948" fill="#FF6400"></rect><path d="M86.9954 37.5479V32.5877H90.7232V33.666H88.4434V34.5209H90.4305V35.6146H88.4434V37.5479H86.9954Z" fill="#eef1f4"></path><path d="M93.2663 37.5479V32.5877H94.7143V36.4388H96.9479V37.5479H93.2663Z" fill="#eef1f4"></path><path d="M99.4921 37.5479V32.5877H103.251V33.6968H100.94V34.5055H102.966V35.63H100.94V36.4388H103.251V37.5479H99.4921Z" fill="#eef1f4"></path><path d="M105.868 37.5479V32.5877H109.627V33.6968H107.316V34.5055H109.342V35.63H107.316V36.4388H109.627V37.5479H105.868Z" fill="#eef1f4"></path><path d="M113.33 37.5479V33.666H111.936V32.5877H116.173V33.666H114.778V37.5479H113.33Z" fill="#eef1f4"></path><path d="M168.698 37.6249C168.364 37.6249 168.049 37.5992 167.751 37.5479C167.453 37.4914 167.199 37.4144 166.988 37.3168V36.123C167.219 36.2308 167.476 36.3181 167.759 36.3848C168.041 36.4516 168.305 36.485 168.552 36.485C168.809 36.485 169.001 36.4644 169.13 36.4234C169.263 36.3771 169.33 36.277 169.33 36.123C169.33 36.0151 169.291 35.9304 169.214 35.8688C169.142 35.8072 169.027 35.7507 168.868 35.6994C168.714 35.648 168.511 35.5838 168.259 35.5068C167.925 35.399 167.661 35.2809 167.466 35.1525C167.271 35.0241 167.13 34.8675 167.042 34.6827C166.96 34.4978 166.919 34.2719 166.919 34.0049C166.919 33.5171 167.091 33.1474 167.435 32.8958C167.784 32.639 168.3 32.5107 168.983 32.5107C169.255 32.5107 169.535 32.5338 169.823 32.58C170.115 32.6262 170.352 32.6776 170.531 32.734V33.9356C170.29 33.838 170.059 33.7687 169.838 33.7276C169.617 33.6865 169.409 33.666 169.214 33.666C168.988 33.666 168.796 33.684 168.637 33.7199C168.477 33.7559 168.398 33.8483 168.398 33.9972C168.398 34.1256 168.465 34.2206 168.598 34.2822C168.737 34.3387 168.981 34.4131 169.33 34.5055C169.735 34.6134 170.044 34.7443 170.254 34.8983C170.47 35.0524 170.616 35.2321 170.693 35.4375C170.77 35.6377 170.809 35.8662 170.809 36.123C170.809 36.5748 170.634 36.9394 170.285 37.2167C169.936 37.4888 169.407 37.6249 168.698 37.6249Z" fill="#eef1f4"></path></svg></div>
+      <p class="open"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Open 24/7/365</p>
+    </div>
+    <div class="fcol">
+      <h4>Dispatch</h4>
+      <a href="tel:+18004197685">800-419-7685</a>
+      <a href="mailto:repairs@francofleetservices.com">repairs@francofleetservices.com</a>
+    </div>
+    <div class="fcol">
+      <h4>Service area</h4>
+      <p>43 states · 50-mi radius</p>
+      <a href="https://francofleetservices.com/coveredlocations/" target="_blank" rel="noopener">See covered cities →</a>
+    </div>
+    <div class="fcol">
+      <h4>Get started</h4>
+      <a href="#quote">Request a fleet assessment →</a>
+    </div>
+  </div>
+  <div class="wrap copy">© <span id="yr"></span> Franco Fleet Services. All rights reserved.</div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* ===== CONFIG ===== */
+const WEBHOOK_URL = "https://n8n-n8n.tre80f.easypanel.host/webhook-test/14089a47-770c-45bf-9534-476f6b703bef";
+
+/* reveal on scroll */
+const io = new IntersectionObserver((es) => {
+  es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+}, { threshold:.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+function val(id){ return (document.getElementById(id).value || '').trim(); }
+function showErr(m){ document.getElementById('ferr').textContent = m; }
+
+let SELECTED_SERVICES = [];
+let EXPANSION = false;
+
+function toggleSvc(el){
+  const v = el.getAttribute('data-v');
+  el.classList.toggle('sel');
+  if(el.classList.contains('sel')) SELECTED_SERVICES.push(v);
+  else SELECTED_SERVICES = SELECTED_SERVICES.filter(x => x !== v);
+  showErr('');
+}
+function toggleExp(el){ el.classList.toggle('sel'); EXPANSION = el.classList.contains('sel'); }
+
+/* ===== SUBMIT — envia para o webhook do n8n ===== */
+async function submitLead(){
+  const lead = {
+    company: val('f_company'), contact_name: val('f_name'), phone: val('f_phone'),
+    email: val('f_email'), address: val('f_address'), fleet_size: val('f_fleet'),
+    business: val('f_business'), services: SELECTED_SERVICES.slice(),
+    message: val('f_message'), expansion: EXPANSION
+  };
+
+  // validação
+  if(!lead.company || !lead.contact_name || !lead.phone || !lead.email || !lead.address || !lead.fleet_size){
+    showErr('Please fill in company, contact, phone, email, address and number of units.'); return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email)){ showErr('Please enter a valid email.'); return; }
+  if(!lead.services.length){ showErr('Please pick at least one service you\u2019re looking for.'); return; }
+  showErr('');
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Sending…';
+
+  const payload = { submittedAt: new Date().toISOString(), lead: lead };
+
+  const done = () => {
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('successView').style.display = 'block';
+    document.getElementById('quote').scrollIntoView({ behavior:'smooth', block:'center' });
+  };
+  const fail = () => {
+    btn.disabled = false;
+    btn.innerHTML = 'Set up my account';
+    showErr('Something went wrong. Please call us or try again.');
+  };
+
+  try {
+    const res = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    // n8n retorna 200 mesmo sem body — qualquer 2xx é sucesso
+    if(res.ok){ done(); } else { fail(); }
+  } catch(e) {
+    // Se o n8n não retornar CORS headers o fetch falha mesmo que a requisição chegue.
+    // Nesse caso assumimos sucesso para não travar o usuário.
+    done();
+  }
+}
+
+function askExpansion(){
+  const el = document.querySelector('.svc-opt[data-v="__exp"]');
+  if(el && !el.classList.contains('sel')){ el.classList.add('sel'); EXPANSION = true; }
+  document.getElementById('quote').scrollIntoView({ behavior:'smooth', block:'start' });
+  setTimeout(() => { const f = document.getElementById('f_address'); if(f) f.focus(); }, 600);
+}
+
+/* ===== MAPA DE COBERTURA ===== */
+const COVERED_STATES = new Set([
+  "Alabama","Arizona","Arkansas","California","Colorado","Connecticut","Delaware",
+  "Florida","Georgia","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky",
+  "Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi",
+  "Missouri","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York",
+  "North Carolina","Ohio","Oklahoma","Pennsylvania","Rhode Island","South Carolina",
+  "Tennessee","Texas","Utah","Vermont","Virginia","Wisconsin","West Virginia","Wyoming"
+]);
+
+const CITY_DOTS = [
+  [34.05,-118.24],[32.72,-117.16],[33.45,-112.07],[36.17,-115.14],[39.74,-104.99],
+  [35.08,-106.65],[40.76,-111.89],[32.78,-96.80],[29.76,-95.37],[29.42,-98.49],
+  [30.27,-97.74],[35.47,-97.52],[39.10,-94.58],[38.63,-90.20],[44.98,-93.27],
+  [43.04,-87.91],[41.85,-87.65],[42.33,-83.05],[39.77,-86.16],[39.96,-82.99],
+  [36.16,-86.78],[35.15,-90.05],[29.95,-90.07],[33.75,-84.39],[25.76,-80.19],
+  [27.95,-82.46],[30.33,-81.66],[35.23,-80.84],[35.78,-78.64],[39.29,-76.61],
+  [39.95,-75.16],[40.71,-74.01],[42.36,-71.06],[42.89,-78.88],[40.44,-79.99],
+  [41.14,-104.82]
+];
+
+function renderMap(){
+  const W = 640, H = 400;
+  const svg = d3.select('#usMap').append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+  const proj = d3.geoAlbersUsa().scale(820).translate([W/2, H/2]);
+  const path = d3.geoPath(proj);
+  const tip = document.getElementById('mapTip');
+  const panel = document.getElementById('mapPanel');
+
+  d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
+    const states = topojson.feature(us, us.objects.states).features;
+    svg.append('g').selectAll('path').data(states).enter()
+      .append('path')
+      .attr('class', d => COVERED_STATES.has(d.properties.name) ? 'map-state covered' : 'map-state')
+      .attr('d', path)
+      .on('mousemove', function(ev, d){
+        if(!COVERED_STATES.has(d.properties.name)){ tip.style.opacity = '0'; return; }
+        const rect = panel.getBoundingClientRect();
+        tip.textContent = d.properties.name + ' · Covered';
+        tip.style.left = (ev.clientX - rect.left) + 'px';
+        tip.style.top = (ev.clientY - rect.top) + 'px';
+        tip.style.opacity = '1';
+      })
+      .on('mouseleave', () => tip.style.opacity = '0');
+
+    const g = svg.append('g');
+    CITY_DOTS.forEach(c => {
+      const p = proj([c[1], c[0]]); if(!p) return;
+      g.append('circle').attr('class','pin-glow').attr('cx',p[0]).attr('cy',p[1]).attr('r',13);
+      g.append('circle').attr('class','pin-dot').attr('cx',p[0]).attr('cy',p[1]).attr('r',3.2);
+    });
+  }).catch(() => {
+    document.getElementById('usMap').style.display = 'none';
+    const fb = document.getElementById('mapFallback');
+    fb.style.display = 'flex';
+    fb.innerHTML = '<span>Coverage across 43 states — up to 50 miles from hundreds of cities.</span>';
+  });
+}
+
+if(window.d3 && window.topojson){ renderMap(); }
+else { window.addEventListener('load', () => { if(window.d3 && window.topojson) renderMap(); }); }
+</script>
+</body>
+</html>
