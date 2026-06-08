@@ -407,7 +407,7 @@
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 /* ===== CONFIG ===== */
-const WEBHOOK_URL = "https://n8n-n8n.tre80f.easypanel.host/webhook/14089a47-770c-45bf-9534-476f6b703bef";
+const WEBHOOK_URL = "https://n8n-n8n.tre80f.easypanel.host/webhook-test/14089a47-770c-45bf-9534-476f6b703bef";
 
 /* reveal on scroll */
 const io = new IntersectionObserver((es) => {
@@ -431,11 +431,19 @@ function toggleSvc(el){
 function toggleExp(el){ el.classList.toggle('sel'); EXPANSION = el.classList.contains('sel'); }
 
 /* ===== SUBMIT — envia para o webhook do n8n ===== */
+const SERVICE_LABELS = {
+  maintenance: 'General maintenance & repair',
+  pm:          'PM / oil changes (scheduled)',
+  emergency:   'Emergency / roadside coverage',
+  dot:         'DOT inspections'
+};
+
 async function submitLead(){
   const lead = {
     company: val('f_company'), contact_name: val('f_name'), phone: val('f_phone'),
     email: val('f_email'), address: val('f_address'), fleet_size: val('f_fleet'),
-    business: val('f_business'), services: SELECTED_SERVICES.slice(),
+    business: val('f_business'),
+    services: SELECTED_SERVICES.map(s => SERVICE_LABELS[s] || s),
     message: val('f_message'), expansion: EXPANSION
   };
 
