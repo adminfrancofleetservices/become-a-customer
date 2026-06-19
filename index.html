@@ -181,6 +181,22 @@
 </style>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<!-- Meta Pixel — Franco Fleet (Customers) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1534205665043569');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1534205665043569&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 
@@ -409,6 +425,15 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 /* ===== CONFIG ===== */
 const WEBHOOK_URL = "https://n8n-n8n.tre80f.easypanel.host/webhook/14089a47-770c-45bf-9534-476f6b703bef";
 
+/* ===== META PIXEL HELPERS ===== */
+function genEventId(){
+  return 'lead_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,10);
+}
+function getCookie(name){
+  const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return m ? m.pop() : '';
+}
+
 /* reveal on scroll */
 const io = new IntersectionObserver((es) => {
   es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
@@ -459,7 +484,20 @@ async function submitLead(){
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span> Sending…';
 
-  const payload = { submittedAt: new Date().toISOString(), lead: lead };
+  // Meta: mesmo eventId no navegador (Pixel) e no servidor (CAPI) → dedup
+  const eventId = genEventId();
+  const meta = {
+    eventId: eventId,
+    fbp: getCookie('_fbp'),
+    fbc: getCookie('_fbc'),
+    userAgent: navigator.userAgent,
+    sourceUrl: window.location.href
+  };
+  if (window.fbq) {
+    fbq('track', 'Lead', { content_name: 'New Customer Setup' }, { eventID: eventId });
+  }
+
+  const payload = { submittedAt: new Date().toISOString(), lead: lead, meta: meta };
 
   const done = () => {
     document.getElementById('formView').style.display = 'none';
